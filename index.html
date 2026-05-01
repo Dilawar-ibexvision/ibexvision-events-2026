@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ibeXvision — US Industry Events Dashboard · May–Oct 2026</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="nav-left">
+    <img class="topnav-logo" src="assets/logo.png" alt="ibeXvision"
+      onerror="this.outerHTML='<span style=\'font-weight:900;font-size:15px;color:white;background:#0F172A;padding:4px 10px;border-radius:6px;\'>ibeXvision</span>'">
+    <div class="nav-title">US Events <span>Dashboard</span> 2026</div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-pill verified"><i class="fa-solid fa-circle-check"></i> Dates Verified</span>
+    <span class="nav-pill">May – Oct 2026</span>
+    <span style="font-size:11px;color:var(--text-3);font-family:'Courier New',monospace" id="liveDate"></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-notice">
+    <i class="fa-solid fa-circle-check"></i>
+    All event dates verified via official websites — May 1, 2026
+  </div>
+  <h1>US Automotive, Cybersecurity &amp; <span>Safety Events 2026</span></h1>
+  <p>Verified calendar for booth planning · Automotive · Cybersecurity · Functional Safety · SDV · ADAS · US only · Post May 1, 2026</p>
+
+  <div class="stats">
+    <div class="stat-card"><i class="fa-solid fa-calendar-check"></i><div><div class="stat-val">13</div><div class="stat-lbl">Verified Events</div></div></div>
+    <div class="stat-card"><i class="fa-solid fa-shield-halved"></i><div><div class="stat-val">5</div><div class="stat-lbl">Cybersecurity</div></div></div>
+    <div class="stat-card"><i class="fa-solid fa-car-side"></i><div><div class="stat-val">4</div><div class="stat-lbl">Automotive/SDV</div></div></div>
+    <div class="stat-card"><i class="fa-solid fa-check-double"></i><div><div class="stat-val">3</div><div class="stat-lbl">Functional Safety</div></div></div>
+    <div class="stat-card" style="border-color:rgba(245,158,11,.4)"><i class="fa-solid fa-star" style="color:#F59E0B"></i><div><div class="stat-val" style="color:#F59E0B">7</div><div class="stat-lbl">Must-Attend</div></div></div>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-title">Filter Category</div>
+    <button class="cat-btn active" onclick="filterCat('all',this)"><span class="cat-dot" style="background:linear-gradient(135deg,#2832D8,#DC2626)"></span>All Events<span class="cat-count">13</span></button>
+    <button class="cat-btn" onclick="filterCat('cyber',this)"><span class="cat-dot" style="background:#DC2626"></span>Cybersecurity<span class="cat-count">5</span></button>
+    <button class="cat-btn" onclick="filterCat('auto',this)"><span class="cat-dot" style="background:#2832D8"></span>Automotive Tech<span class="cat-count">4</span></button>
+    <button class="cat-btn" onclick="filterCat('safety',this)"><span class="cat-dot" style="background:#16A34A"></span>Functional Safety<span class="cat-count">2</span></button>
+    <button class="cat-btn" onclick="filterCat('sdv',this)"><span class="cat-dot" style="background:#0891B2"></span>SDV / Connected<span class="cat-count">2</span></button>
+    <button class="cat-btn" onclick="filterCat('adas',this)"><span class="cat-dot" style="background:#D97706"></span>ADAS / Autonomous<span class="cat-count">3</span></button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-title">Jump to Month</div>
+    <button class="month-btn has-event" onclick="jumpTo('may')">May 2026 <small>· 3 events</small></button>
+    <button class="month-btn has-event" onclick="jumpTo('june')">June 2026 <small>· 5 events</small></button>
+    <button class="month-btn has-event" onclick="jumpTo('july')">July 2026 <small>· 1 event</small></button>
+    <button class="month-btn has-event" onclick="jumpTo('august')">August 2026 <small>· 1 event</small></button>
+    <button class="month-btn has-event" onclick="jumpTo('september')">September 2026 <small>· 1 event</small></button>
+    <button class="month-btn has-event" onclick="jumpTo('october')">October 2026 <small>· 3 events</small></button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-title">Colour Guide</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#DC2626"></span>Cybersecurity</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#2832D8"></span>Automotive Tech</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#16A34A"></span>Functional Safety</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#0891B2"></span>SDV / Connected</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#D97706"></span>ADAS / Autonomous</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#7C3AED"></span>Cross-Domain</div>
+    <div style="margin-top:8px">
+      <div class="legend-item"><i class="fa-solid fa-circle-check" style="color:#16A34A;font-size:10px"></i>&nbsp;Date verified online</div>
+      <div class="legend-item"><i class="fa-solid fa-triangle-exclamation" style="color:#D97706;font-size:10px"></i>&nbsp;Estimated / TBC</div>
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-title">Actions</div>
+    <button class="action-btn" onclick="switchView('cost')"><i class="fa-solid fa-dollar-sign"></i>Booth Cost Summary</button>
+    <button class="action-btn" onclick="exportCSV()"><i class="fa-solid fa-file-csv"></i>Export CSV</button>
+    <button class="action-btn" onclick="window.print()"><i class="fa-solid fa-print"></i>Print</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="toolbar">
+    <div class="view-toggle">
+      <button class="view-btn active" id="btnList" onclick="switchView('list')"><i class="fa-solid fa-list"></i>List</button>
+      <button class="view-btn" id="btnCal" onclick="switchView('calendar')"><i class="fa-solid fa-calendar-days"></i>Calendar</button>
+      <button class="view-btn" id="btnCost" onclick="switchView('cost')"><i class="fa-solid fa-dollar-sign"></i>Costs</button>
+    </div>
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Search events, location, product…" oninput="doSearch(this.value)">
+    </div>
+  </div>
+
+  <!-- ═══════ LIST VIEW ═══════ -->
+  <div id="listView">
+
+    <!-- ── MAY 2026 ── -->
+    <div class="month-divider" id="may">MAY 2026 <span class="month-count">3 events</span></div>
+
+    <!-- 1 AUVSI XPONENTIAL -->
+    <div class="event-card adas" data-cats="adas auto" style="animation-delay:0ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">MAY</div><div class="edb-day">11</div><div class="edb-dur">May 11–14</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>AUVSI XPONENTIAL 2026<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-adas">ADAS</span><span class="badge b-auto">Autonomous</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>May 11–14, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Detroit, MI</span>
+            <span><i class="fa-solid fa-building"></i>Huntington Place</span>
+          </div>
+          <div class="edesc">World's largest robotics, autonomous vehicles &amp; unmanned systems event — 10,000+ attendees. Moved to Detroit in 2026. Ideal to demo ibeXeYe360° sensor fusion and Cortex simulation to ADAS program leads at OEMs and Tier-1s.</div>
+          <div class="ecost">
+            <span class="ecost-label">Booth Est.</span>
+            <span class="ecost-val">$8,000–$18,000</span>
+            <span class="ecost-detail">10×10 booth · island options available</span>
+            <a class="ecost-contact" href="https://www.xponential.org/xponential2026/Public/Fly.aspx?ID=143756" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Exhibitor Info</a>
+          </div>
+          <div class="etags"><span class="etag">Eye 360°</span><span class="etag">Cortex</span><span class="etag">ADAS</span><span class="etag">Autonomous</span><span class="etag">Sensor Fusion</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.xponential.org" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.xponential.org/xponential2026/Public/Fly.aspx?ID=143756" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>Sponsor</a>
+          <button class="btn-save" onclick="doSave('AUVSI XPONENTIAL','May 11-14','Detroit MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 GlobalPlatform Cybersecurity Vehicle Forum -->
+    <div class="event-card cyber" data-cats="cyber" style="animation-delay:50ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">MAY</div><div class="edb-day">19</div><div class="edb-dur">1 day</div></div>
+        <div>
+          <div class="ename">GlobalPlatform Cybersecurity Vehicle Forum<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-cyber">Cybersecurity</span><span class="badge b-auto">Automotive</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>May 19, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Michigan, USA</span>
+            <span><i class="fa-solid fa-building"></i>DEKRA North America (Hybrid)</span>
+          </div>
+          <div class="edesc">GlobalPlatform's annual Cybersecurity Vehicle Forum — practical automotive cybersecurity approaches including SESIP component evaluation and supply chain security. Hybrid event: attend in-person in Michigan or virtually.</div>
+          <div class="ecost">
+            <span class="ecost-label">Attendance</span>
+            <span class="ecost-val">Member / Free</span>
+            <span class="ecost-detail">Registration via GlobalPlatform member portal</span>
+            <a class="ecost-contact" href="mailto:events@globalplatform.org"><i class="fa-solid fa-envelope"></i>events@globalplatform.org</a>
+          </div>
+          <div class="etags"><span class="etag">PenTester Lab</span><span class="etag">ISO 21434</span><span class="etag">Supply Chain</span><span class="etag">SESIP</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://globalplatform.org/event/cybersecurity-vehicle-forum/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <button class="btn-save" onclick="doSave('GlobalPlatform Cyber Vehicle Forum','May 19','Michigan USA')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 escar USA -->
+    <div class="event-card cyber" data-cats="cyber auto" style="animation-delay:100ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">MAY</div><div class="edb-day">19</div><div class="edb-dur">May 19–21</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>escar USA 2026 (13th Edition)<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-cyber">Cybersecurity</span><span class="badge b-auto">Automotive</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Best Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>May 19–21, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Novi, MI</span>
+            <span><i class="fa-solid fa-building"></i>Sheraton Detroit Novi Hotel · 21111 Haggerty Rd</span>
+          </div>
+          <div class="edesc">North America's #1 embedded automotive cybersecurity conference. Direct audience: OEM security architects, Tier-1 compliance leads. Perfect for PenTester Lab, ibeXvSOC, and ISO 21434 / UNECE R155 live demos.</div>
+          <div class="ecost">
+            <span class="ecost-label">Exhibitor</span>
+            <span class="ecost-val">$6,200</span>
+            <span class="ecost-detail">6-ft table · 2 chairs · 2 full registrations (≈$850 ea)</span>
+            <a class="ecost-contact" href="mailto:sara@waypointmc.com"><i class="fa-solid fa-envelope"></i>sara@waypointmc.com</a>
+          </div>
+          <div class="etags"><span class="etag">PenTester Lab</span><span class="etag">V-SOC</span><span class="etag">ISO 21434</span><span class="etag">UNECE R155</span><span class="etag">TARA</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.escar.info/escar-usa.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.escar.info/sponsoring-exhibition.html" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>Sponsor</a>
+          <button class="btn-save" onclick="doSave('escar USA 2026','May 19-21','Novi MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── JUNE 2026 ── -->
+    <div class="month-divider" id="june">JUNE 2026 <span class="month-count">7 events</span></div>
+
+    <!-- 4 AutoTech 2026 -->
+    <div class="event-card auto" data-cats="auto cyber sdv" style="animation-delay:150ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUN</div><div class="edb-day">2</div><div class="edb-dur">Jun 2–4</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>AutoTech 2026 (formerly TU-Automotive)<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-auto">Automotive</span><span class="badge b-sdv">SDV</span><span class="badge b-cyber">Cybersecurity</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>June 2–4, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Novi, MI</span>
+            <span><i class="fa-solid fa-building"></i>Suburban Collection Showplace</span>
+          </div>
+          <div class="edesc">North America's largest connected &amp; autonomous vehicle tech conference — 200+ exhibitors, all three supply chain tiers (OEM, T1, T2). Focused on software-defined vehicles, connected cars, and AI integration. Best single event for the full ibeXvision product suite.</div>
+          <div class="ecost">
+            <span class="ecost-label">Booth</span>
+            <span class="ecost-val">$10,000–$20,000+</span>
+            <span class="ecost-detail">Corner 10×10 from $10k · Diamond/Gold $15k–$20k+ · back-row startup kiosk ~$4k</span>
+            <a class="ecost-contact" href="https://www.autotechevents.com/exhibiting" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Exhibitor Page</a>
+          </div>
+          <div class="etags"><span class="etag">All Products</span><span class="etag">SDV</span><span class="etag">Connected Vehicles</span><span class="etag">OEM · T1 · T2</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://autotechevents.com/home/passes-prices/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.autotechevents.com/sponsor" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>Sponsor</a>
+          <button class="btn-save" onclick="doSave('AutoTech 2026','June 2-4','Novi MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4b Auto Tech Showcase 2026 — June 9, Washington DC -->
+    <div class="event-card auto" data-cats="auto" style="animation-delay:175ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUN</div><div class="edb-day">9</div><div class="edb-dur">Jun 9</div></div>
+        <div>
+          <div class="ename">Auto Tech Showcase 2026<span class="est-tag"><i class="fa-solid fa-triangle-exclamation"></i>EST.</span></div>
+          <div class="badges"><span class="badge b-auto">Automotive</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>June 9, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Washington, DC</span>
+            <span><i class="fa-solid fa-building"></i>Audi Field</span>
+          </div>
+          <div class="edesc">Hosted by the Alliance for Automotive Innovation — brings automotive technology companies directly to federal policymakers and regulators. Strategic if ibeXvision wants to influence future ADAS safety standards, ISO 21434 adoption, or UNECE R155 enforcement in the US market.</div>
+          <div class="ecost">
+            <span class="ecost-label">Exhibitor Est.</span>
+            <span class="ecost-val">TBD</span>
+            <span class="ecost-detail">Alliance for Automotive Innovation member/partner event · contact for exhibitor opportunities</span>
+            <a class="ecost-contact" href="https://www.automotiveinnovation.org" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Alliance for Auto Innovation</a>
+          </div>
+          <div class="etags"><span class="etag">Policy</span><span class="etag">ADAS Standards</span><span class="etag">ISO 21434</span><span class="etag">Government Regulation</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.automotiveinnovation.org" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>More Info</a>
+          <button class="btn-save" onclick="doSave('Auto Tech Showcase 2026','June 9','Audi Field Washington DC')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 IEEE IV 2026 -->
+    <div class="event-card adas" data-cats="adas auto" style="animation-delay:200ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUN</div><div class="edb-day">21</div><div class="edb-dur">Jun 21–25</div></div>
+        <div>
+          <div class="ename">IEEE Intelligent Vehicles Symposium 2026<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>CORRECTED</span></div>
+          <div class="badges"><span class="badge b-adas">ADAS</span><span class="badge b-auto">Automotive</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>June 21–25, 2026 <small style="color:var(--amber)">(workshops from Jun 21)</small></span>
+            <span><i class="fa-solid fa-location-dot"></i>Detroit, MI</span>
+            <span><i class="fa-solid fa-building"></i>Huntington Place (formerly TCF Center)</span>
+          </div>
+          <div class="edesc">IEEE's premier conference on intelligent vehicle technologies — perception, planning, machine learning for ADAS. Academic and industry researchers from OEMs worldwide. Present Eye 360° perception AI research papers or sponsor technical sessions.</div>
+          <div style="background:#FFFBEB;border:1px solid rgba(217,119,6,.25);border-radius:6px;padding:8px 12px;margin-bottom:8px;font-size:12px;color:#92400E;display:flex;gap:8px;align-items:flex-start;">
+            <i class="fa-solid fa-triangle-exclamation" style="color:#D97706;flex-shrink:0;margin-top:1px"></i>
+            <span><strong>Arrive June 21:</strong> ADAS-focused technical workshops begin a day earlier than main sessions. The highest-value engineering networking happens on Workshop Day 1 (Jun 21) — plan arrival for June 21, not June 22.</span>
+          </div>
+          <div class="ecost">
+            <span class="ecost-label">Sponsor Est.</span>
+            <span class="ecost-val">$3,000–$8,000</span>
+            <span class="ecost-detail">Bronze/Silver/Gold academic conference tiers</span>
+            <a class="ecost-contact" href="https://ieee-iv.org/2026/sponsorship" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Sponsor Info</a>
+          </div>
+          <div class="etags"><span class="etag">Eye 360°</span><span class="etag">Perception AI</span><span class="etag">Machine Learning</span><span class="etag">ADAS</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://ieee-iv.org" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <button class="btn-save" onclick="doSave('IEEE IV 2026','June 21-25','Huntington Place Detroit MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 Automotive Chassis Systems USA -->
+    <div class="event-card safety" data-cats="safety auto" style="animation-delay:250ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUN</div><div class="edb-day">23</div><div class="edb-dur">Jun 23–24</div></div>
+        <div>
+          <div class="ename">Automotive Chassis Systems USA 2026</div>
+          <div class="badges"><span class="badge b-safety">Functional Safety</span><span class="badge b-auto">Automotive</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>June 23–24, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Ypsilanti, MI</span>
+            <span><i class="fa-solid fa-building"></i>Eagle Crest Resort · 1275 S Huron St, Ypsilanti</span>
+          </div>
+          <div class="edesc">Focused on braking, steering, and chassis controls with heavy emphasis on safety and software-based architecture. Strong overlap with Codex functional safety analysis and ISO 26262 requirements. Tier-1 chassis engineers attend.</div>
+          <div class="ecost">
+            <span class="ecost-label">Sponsor Est.</span>
+            <span class="ecost-val">$3,000–$6,000</span>
+            <span class="ecost-detail">Table-top / display booth options</span>
+          </div>
+          <div class="etags"><span class="etag">Codex</span><span class="etag">Cortex</span><span class="etag">ISO 26262</span><span class="etag">Chassis Safety</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.automotive-iq.com/events-automotive-chassis-systems-usa" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <button class="btn-save" onclick="doSave('Automotive Chassis Systems USA','June 23-24','Ypsilanti MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 SDV USA -->
+    <div class="event-card sdv" data-cats="sdv auto" style="animation-delay:300ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUN</div><div class="edb-day">29</div><div class="edb-dur">Jun 29–30</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>SDV USA — Software Defined Vehicle Summit 2026<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-sdv">SDV</span><span class="badge b-auto">Automotive</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>June 29–30, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>San Francisco, CA</span>
+          </div>
+          <div class="edesc">Premier platform for software-defined vehicle technology — OTA updates, cloud solutions, machine learning for safety, cybersecurity integration. Direct audience for Codex AI agents and Cortex digital twin capabilities.</div>
+          <div class="ecost">
+            <span class="ecost-label">Exhibition</span>
+            <span class="ecost-val">$3,000–$30,000+</span>
+            <span class="ecost-detail">Standard booth from $3,250 · Platinum branding $30k+</span>
+            <a class="ecost-contact" href="https://www.sdv-usa.com" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Partner Info</a>
+          </div>
+          <div class="etags"><span class="etag">Codex</span><span class="etag">Cortex</span><span class="etag">SDV</span><span class="etag">OTA</span><span class="etag">Cloud Auto</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.sdv-usa.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.sdv-usa.com" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>Partner</a>
+          <button class="btn-save" onclick="doSave('SDV USA Summit','June 29-30','San Francisco CA')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 ICS/SCADA Symposium -->
+    <div class="event-card cyber" data-cats="cyber" style="animation-delay:350ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUN</div><div class="edb-day">16</div><div class="edb-dur">Jun 16–18</div></div>
+        <div>
+          <div class="ename">ICS / SCADA Cybersecurity Symposium 2026</div>
+          <div class="badges"><span class="badge b-cyber">Cybersecurity</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>June 16–18, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Chicago, IL</span>
+          </div>
+          <div class="edesc">Critical infrastructure cybersecurity symposium covering OT/ICS security — highly relevant to connected vehicle manufacturing security and smart grid integration for EV charging infrastructure. Showcase PenTester Lab to industrial security teams.</div>
+          <div class="etags"><span class="etag">PenTester Lab</span><span class="etag">OT Security</span><span class="etag">ICS</span><span class="etag">EV Infrastructure</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.sans.org/cyber-security-training-events/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <button class="btn-save" onclick="doSave('ICS SCADA Symposium','June 16-18','Chicago IL')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8b Sensors Converge 2026 -->
+    <div class="event-card adas" data-cats="adas auto" style="animation-delay:375ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUN</div><div class="edb-day">23</div><div class="edb-dur">Jun 23–25</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>Sensors Converge 2026 (Sensor+Test USA)<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>CORRECTED</span></div>
+          <div class="badges"><span class="badge b-adas">ADAS</span><span class="badge b-auto">Automotive</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>June 23–25, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Santa Clara, CA</span>
+            <span><i class="fa-solid fa-building"></i>Santa Clara Convention Center</span>
+          </div>
+          <div class="edesc">North America's primary event for sensor hardware, measurement technology, and perception systems. Ideal complement to SDV USA — same San Francisco Bay Area trip, different audience. Demo ibeXeYe360° sensor fusion alongside your software stack to engineers who design, select, and integrate camera, LiDAR, and radar sensors into ADAS platforms.</div>
+          <div style="background:#F0FDF4;border:1px solid rgba(22,163,74,.25);border-radius:6px;padding:8px 12px;margin-bottom:8px;font-size:12px;color:#166534;display:flex;gap:8px;align-items:flex-start;">
+            <i class="fa-solid fa-route" style="color:#16A34A;flex-shrink:0;margin-top:1px"></i>
+            <span><strong>California cluster strategy:</strong> Sensors Converge (Jun 23–25, Santa Clara) → Jun 26–28 gap for private OEM/VC meetings in Palo Alto → SDV USA (Jun 29–30, San Francisco). All within 45 minutes by car — one flight covers three high-value touchpoints.</span>
+          </div>
+          <div class="ecost">
+            <span class="ecost-label">Exhibition Est.</span>
+            <span class="ecost-val">$5,000–$15,000</span>
+            <span class="ecost-detail">Sensor industry expo booth · standard 10×10 and island options</span>
+            <a class="ecost-contact" href="https://www.sensorsconverge.com/exhibiting" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Exhibitor Info</a>
+          </div>
+          <div class="etags"><span class="etag">Eye 360°</span><span class="etag">LiDAR · Radar · Camera</span><span class="etag">Sensor Fusion</span><span class="etag">ADAS Perception</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.sensorsconverge.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.sensorsconverge.com/exhibiting" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>Exhibit</a>
+          <button class="btn-save" onclick="doSave('Sensors Converge 2026','June 23-25','Santa Clara CA')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── JULY 2026 ── -->
+    <div class="month-divider" id="july">JULY 2026 <span class="month-count">1 event</span></div>
+
+    <!-- 9 Automated Transportation Symposium (ATS) 2026 -->
+    <div class="event-card adas" data-cats="adas auto" style="animation-delay:400ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">JUL</div><div class="edb-day">27</div><div class="edb-dur">Jul 27–30</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>Automated Transportation Symposium (ATS) 2026<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>CONFIRMED</span></div>
+          <div class="badges"><span class="badge b-adas">ADAS</span><span class="badge b-auto">Autonomous</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>July 27–30, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>San Diego, CA</span>
+            <span><i class="fa-solid fa-building"></i>Hilton San Diego Bayfront</span>
+          </div>
+          <div class="edesc">SAE International's premier forum for Level 4–5 autonomous driving development, safety validation, simulation, and government regulation. Registration is live via SAE International. Strong audience for Cortex simulation and Eye 360° AV perception validation.</div>
+          <div style="background:#EFF6FF;border:1px solid rgba(40,50,216,.2);border-radius:6px;padding:8px 12px;margin-bottom:8px;font-size:12px;color:#1E3A8A;display:flex;gap:8px;align-items:flex-start;">
+            <i class="fa-solid fa-tag" style="color:#2832D8;flex-shrink:0;margin-top:1px"></i>
+            <span><strong>Early Bird by July 17:</strong> Member $798 · Non-member $948. After 7/17: $927/$1,077. For exhibit space or sponsorship contact <strong>Megan McCoy</strong> at megan.mccoy@sae.org.</span>
+          </div>
+          <div class="ecost">
+            <span class="ecost-label">Attend · Sponsor</span>
+            <span class="ecost-val">$798 reg · exhibit rates on request</span>
+            <span class="ecost-detail">Member early bird $798 by 7/17 · Non-member $948 · Contact Megan McCoy for exhibit/sponsorship</span>
+            <a class="ecost-contact" href="mailto:megan.mccoy@sae.org"><i class="fa-solid fa-envelope"></i>megan.mccoy@sae.org</a>
+          </div>
+          <div class="etags"><span class="etag">Cortex</span><span class="etag">Eye 360°</span><span class="etag">AV Level 4/5</span><span class="etag">Simulation</span><span class="etag">Safety Validation</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.sae.org/attend/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="mailto:megan.mccoy@sae.org"><i class="fa-solid fa-handshake"></i>Exhibit / Sponsor</a>
+          <button class="btn-save" onclick="doSave('SAE ATS 2026','July 27-30','Hilton San Diego Bayfront')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AUGUST 2026 ── -->
+    <div class="month-divider" id="august">AUGUST 2026 <span class="month-count">1 event</span></div>
+
+    <!-- 10 DEF CON 34 -->
+    <div class="event-card cyber" data-cats="cyber" style="animation-delay:450ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">AUG</div><div class="edb-day">6</div><div class="edb-dur">Aug 6–9</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>DEF CON 34 — Car Hacking Village<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-cyber">Cybersecurity</span><span class="badge b-auto">Automotive</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>August 6–9, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Las Vegas, NV</span>
+            <span><i class="fa-solid fa-building"></i>Las Vegas Convention Center</span>
+          </div>
+          <div class="edesc">World's largest hacker conference — Car Hacking Village is the premier automotive security community event. Live ECU hacking on real hardware. Gold tier sponsorship includes a technical demonstration table — ideal for live ibeXvPenTesterLab sessions against real ECUs.</div>
+          <div style="background:#FEF2F2;border:1px solid rgba(220,38,38,.25);border-radius:6px;padding:8px 12px;margin-bottom:8px;font-size:12px;color:#991B1B;display:flex;gap:8px;align-items:flex-start;">
+            <i class="fa-solid fa-circle-xmark" style="color:#DC2626;flex-shrink:0;margin-top:1px"></i>
+            <span><strong>No Sales at the Village:</strong> CHV sponsorship tables are strictly technical/educational — no sales pitches or lead generation. Use Gold tier ($8,500) for live PenTester Lab demos and ECU hacking sessions. Build technical credibility here; convert to pipeline at Auto-ISAC and escar.</span>
+          </div>
+          <div class="ecost">
+            <span class="ecost-label">CHV Village Sponsor</span>
+            <span class="ecost-val">$2,500–$8,500</span>
+            <span class="ecost-detail">Bronze $2,500 (logo) · Silver $4,500 (+1 badge + social) · Gold $8,500 (tech demo table + CHV badge art) · General badge $560 early bird / $520 cash at door</span>
+            <a class="ecost-contact" href="https://www.carhackingvillage.com" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>CHV Sponsorship</a>
+          </div>
+          <div class="etags"><span class="etag">PenTester Lab</span><span class="etag">Car Hacking</span><span class="etag">ECU Security</span><span class="etag">CAN Bus</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://defcon.org" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.carhackingvillage.com" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>CHV Sponsor</a>
+          <button class="btn-save" onclick="doSave('DEF CON 34','Aug 6-9','Las Vegas NV')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SEPTEMBER 2026 ── -->
+    <div class="month-divider" id="september">SEPTEMBER 2026 <span class="month-count">2 events</span></div>
+
+    <!-- 10b Q3 AvTech Summit 2026 -->
+    <div class="event-card mixed" data-cats="cyber auto" style="animation-delay:475ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">SEP</div><div class="edb-day">28</div><div class="edb-dur">Sep 28–29</div></div>
+        <div>
+          <div class="ename">Q3 AvTech Summit 2026</div>
+          <div class="badges"><span class="badge b-cyber">Cybersecurity</span><span class="badge b-auto">Automotive</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>September 28–29, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Detroit, MI</span>
+            <span><i class="fa-solid fa-building"></i>Aviation-ISAC hosted event</span>
+          </div>
+          <div class="edesc">Aviation-ISAC's Q3 technology summit with a strong automotive/aviation cybersecurity convergence focus. Cross-sector threat intelligence sharing between aviation and automotive OEMs — relevant for ibeXvSOC threat detection and PenTester Lab regulatory compliance positioning across both verticals.</div>
+          <div class="ecost">
+            <span class="ecost-label">Sponsor Est.</span>
+            <span class="ecost-val">TBD</span>
+            <span class="ecost-detail">Aviation-ISAC member / partner event — contact for sponsorship</span>
+            <a class="ecost-contact" href="https://www.aviation-isac.org" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Aviation-ISAC</a>
+          </div>
+          <div class="etags"><span class="etag">V-SOC</span><span class="etag">PenTester Lab</span><span class="etag">Cyber Intelligence</span><span class="etag">Cross-Sector</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.aviation-isac.org" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>More Info</a>
+          <button class="btn-save" onclick="doSave('Q3 AvTech Summit 2026','Sept 28-29','Detroit MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 TÜV Rheinland Symposium -->
+    <div class="event-card mixed" data-cats="safety cyber" style="animation-delay:500ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">SEP</div><div class="edb-day">—</div><div class="edb-dur">Sep/Oct TBD</div></div>
+        <div>
+          <div class="ename">TÜV Rheinland — Functional Safety &amp; Cybersecurity Symposium<span class="est-tag"><i class="fa-solid fa-triangle-exclamation"></i>TBD</span></div>
+          <div class="badges"><span class="badge b-safety">Functional Safety</span><span class="badge b-cyber">Cybersecurity</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Best Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>September / October 2026 (Final dates TBD)</span>
+            <span><i class="fa-solid fa-location-dot"></i>Detroit, MI</span>
+            <span><i class="fa-solid fa-building"></i>TÜV Rheinland North America</span>
+          </div>
+          <div class="edesc">TÜV Rheinland's technical platform for ISO 26262 (Functional Safety) and ISO/SAE 21434 (Cybersecurity) standards. Expert practitioners share implementation experiences. Direct audience for ibeXcodex FuSa analysis and PenTester Lab compliance automation.</div>
+          <div class="ecost">
+            <span class="ecost-label">Sponsor Est.</span>
+            <span class="ecost-val">$3,000–$7,000</span>
+            <span class="ecost-detail">TÜV partner sponsor packages</span>
+            <a class="ecost-contact" href="https://www.tuv.com/usa/en/events.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>TÜV Events</a>
+          </div>
+          <div class="etags"><span class="etag">Codex FuSa</span><span class="etag">PenTester Lab</span><span class="etag">ISO 26262</span><span class="etag">ISO 21434</span><span class="etag">ASPICE</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.tuv.com/usa/en/events.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <button class="btn-save" onclick="doSave('TÜV Rheinland FuSa/Cyber Symposium','Sep/Oct 2026','Detroit MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── OCTOBER 2026 ── -->
+    <div class="month-divider" id="october">OCTOBER 2026 <span class="month-count">4 events</span></div>
+
+    <!-- 12 Auto-ISAC Summit -->
+    <div class="event-card cyber" data-cats="cyber auto" style="animation-delay:550ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">OCT</div><div class="edb-day">6</div><div class="edb-dur">Oct 6–9</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>10th Annual Auto-ISAC Cybersecurity Summit<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-cyber">Cybersecurity</span><span class="badge b-auto">Automotive</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>October 6–9, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Novi, MI</span>
+            <span><i class="fa-solid fa-building"></i>Vibe Credit Union Showplace (formerly Suburban Collection Showplace)</span>
+          </div>
+          <div class="edesc">10th Annual Auto-ISAC Summit — "The Cost of Vigilance" theme. CISOs &amp; security leads from every major OEM. Oct 6 &amp; 9 are member-only; general sessions Oct 7–8. In-person and virtual. Complimentary shuttle from select hotels.</div>
+          <div class="ecost">
+            <span class="ecost-label">Sponsor</span>
+            <span class="ecost-val">$5,000–$7,000</span>
+            <span class="ecost-detail">Entry exhibitor · badge lanyards/Wi-Fi ≈$5k · attendee $5k</span>
+            <a class="ecost-contact" href="mailto:heatherwagner@automotiveisac.com"><i class="fa-solid fa-envelope"></i>heatherwagner@automotiveisac.com</a>
+          </div>
+          <div class="etags"><span class="etag">V-SOC</span><span class="etag">PenTester Lab</span><span class="etag">ISO 21434</span><span class="etag">Supply Chain</span><span class="etag">OEM CISOs</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://automotiveisac.com/2026-annual-summit" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="mailto:heatherwagner@automotiveisac.com"><i class="fa-solid fa-handshake"></i>Sponsor</a>
+          <button class="btn-save" onclick="doSave('Auto-ISAC Summit 2026','Oct 6-9','Novi MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12b ACM Advanced Technology Labs -->
+    <div class="event-card mixed" data-cats="cyber adas" style="animation-delay:575ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">OCT</div><div class="edb-day">19</div><div class="edb-dur">Oct 19–22</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>ACM Advanced Technology Lab Days 2026<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>CONFIRMED</span></div>
+          <div class="badges"><span class="badge b-cyber">Cybersecurity</span><span class="badge b-adas">ADAS</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>October 19–22, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Ypsilanti, MI</span>
+            <span><i class="fa-solid fa-building"></i>American Center for Mobility (ACM), Willow Run</span>
+          </div>
+          <div class="edesc">Hands-on lab days at ACM's real-world test environment — not a conference booth. Three focused tracks: Advanced Wireless (Oct 20), EV Infrastructure (Oct 21), and <strong>Guided Attacks (Oct 22)</strong>. The Guided Attacks day is the ideal live outdoor demo for PenTester Lab — real vehicle targets in a controlled setting with specialist audience.</div>
+          <div style="background:#F0FDF4;border:1px solid rgba(22,163,74,.25);border-radius:6px;padding:8px 12px;margin-bottom:8px;font-size:12px;color:#166534;display:flex;gap:8px;align-items:flex-start;">
+            <i class="fa-solid fa-flask" style="color:#16A34A;flex-shrink:0;margin-top:1px"></i>
+            <span><strong>Focus Oct 22 — Guided Attacks Day:</strong> Engineers bring actual ECUs and test vehicles. Demo ibeXvPenTesterLab against real hardware on a live track. Creates the most memorable, credible product demonstration possible for an automotive cybersecurity tool.</span>
+          </div>
+          <div class="ecost">
+            <span class="ecost-label">Lab Participation</span>
+            <span class="ecost-val">TBD</span>
+            <span class="ecost-detail">ACM lab day participant / lab sponsor rates · contact ACM for demo slot booking</span>
+            <a class="ecost-contact" href="https://www.acmwillowrun.org" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>ACM Willow Run</a>
+          </div>
+          <div class="etags"><span class="etag">PenTester Lab</span><span class="etag">Live ECU Demo</span><span class="etag">Guided Attacks</span><span class="etag">Eye 360°</span><span class="etag">EV Security</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.acmwillowrun.org" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <button class="btn-save" onclick="doSave('ACM Advanced Technology Labs','Oct 19-22','American Center for Mobility Ypsilanti MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 Vehicle Tech Week -->
+    <div class="event-card adas" data-cats="adas auto" style="animation-delay:600ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">OCT</div><div class="edb-day">27</div><div class="edb-dur">Oct 27–29</div></div>
+        <div>
+          <div class="ename"><i class="fa-solid fa-star priority-star"></i>Vehicle Tech Week North America 2026<span class="verified-tag"><i class="fa-solid fa-circle-check"></i>VERIFIED</span></div>
+          <div class="badges"><span class="badge b-adas">ADAS</span><span class="badge b-auto">Automotive</span><span class="badge b-hot"><i class="fa-solid fa-fire"></i>Key Fit</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>October 27–29, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Novi, MI</span>
+            <span><i class="fa-solid fa-building"></i>Suburban Collection Showplace</span>
+          </div>
+          <div class="edesc">Massive co-located "festival of technology" — Autonomous Vehicle Tech Expo + Automotive Testing Expo + Automotive Interiors Expo under one roof. 10,000+ engineers, 500+ exhibitors. Showcase the complete ibeXvision product line with Eye 360° live sensor demos.</div>
+          <div class="ecost">
+            <span class="ecost-label">Exhibition</span>
+            <span class="ecost-val">$5,000–$20,000+</span>
+            <span class="ecost-detail">Shell scheme / space only · island booths available</span>
+            <a class="ecost-contact" href="https://www.autonomousvehicletechnologyexpo-usa.com/en/exhibit.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>Exhibitor Info</a>
+          </div>
+          <div class="etags"><span class="etag">Eye 360°</span><span class="etag">All Products</span><span class="etag">ADAS Testing</span><span class="etag">AV Expo</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.autonomousvehicletechnologyexpo-usa.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.autonomousvehicletechnologyexpo-usa.com/en/exhibit.html" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>Exhibit</a>
+          <button class="btn-save" onclick="doSave('Vehicle Tech Week NA','Oct 27-29','Novi MI')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NOVEMBER 2026 ── -->
+    <div class="month-divider" id="november">NOVEMBER 2026 <span class="month-count">1 event</span></div>
+
+    <!-- 14 SEMA Show 2026 -->
+    <div class="event-card auto" data-cats="auto adas" style="animation-delay:650ms">
+      <div class="card-inner">
+        <div class="edb"><div class="edb-month">NOV</div><div class="edb-day">3</div><div class="edb-dur">Nov 3–6</div></div>
+        <div>
+          <div class="ename">SEMA Show 2026<span class="est-tag"><i class="fa-solid fa-triangle-exclamation"></i>PLAN AHEAD</span></div>
+          <div class="badges"><span class="badge b-auto">Automotive</span><span class="badge b-adas">ADAS</span></div>
+          <div class="emeta">
+            <span><i class="fa-solid fa-calendar"></i>November 3–6, 2026</span>
+            <span><i class="fa-solid fa-location-dot"></i>Las Vegas, NV</span>
+            <span><i class="fa-solid fa-building"></i>Las Vegas Convention Center</span>
+            <span><i class="fa-solid fa-triangle-exclamation" style="color:var(--amber)"></i>Outside core window — plan 6 months ahead</span>
+          </div>
+          <div class="edesc">World's largest automotive specialty trade show. The ADAPT (Automotive Design &amp; Performance Technology) section is now a major focus area — ADAS calibration, sensor tech, and safety are becoming top profit centers. Access Tier-1 and Tier-2 supplier decision-makers and aftermarket technology buyers in large volume.</div>
+          <div class="ecost">
+            <span class="ecost-label">Exhibition Est.</span>
+            <span class="ecost-val">$8,000–$25,000+</span>
+            <span class="ecost-detail">Booth size × location dependent · ADAPT section preferred for ADAS/safety products</span>
+            <a class="ecost-contact" href="https://www.semashow.com/exhibit" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>SEMA Exhibit Info</a>
+          </div>
+          <div class="etags"><span class="etag">All Products</span><span class="etag">ADAPT Section</span><span class="etag">ADAS Calibration</span><span class="etag">Tier-1 · Tier-2</span></div>
+        </div>
+        <div class="eactions">
+          <a class="btn-visit" href="https://www.semashow.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i>Register / Info</a>
+          <a class="btn-sponsor" href="https://www.semashow.com/exhibit" target="_blank" rel="noopener"><i class="fa-solid fa-handshake"></i>Exhibit</a>
+          <button class="btn-save" onclick="doSave('SEMA Show 2026','Nov 3-6','Las Vegas Convention Center')"><i class="fa-regular fa-bookmark"></i>Save</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /listView -->
+
+  <!-- ═══════ CALENDAR VIEW ═══════ -->
+  <div id="calendarView">
+    <div class="cal-header">
+      <div class="cal-header-title"><i class="fa-solid fa-calendar-days" style="color:var(--brand);margin-right:8px"></i>Events Calendar · May – October 2026</div>
+      <div class="cal-legend">
+        <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#DC2626"></span>Cybersecurity</div>
+        <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#2832D8"></span>Automotive</div>
+        <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#16A34A"></span>Functional Safety</div>
+        <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#0891B2"></span>SDV</div>
+        <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#D97706"></span>ADAS</div>
+      </div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+
+  <!-- ═══════ COST SUMMARY VIEW ═══════ -->
+  <div id="costView" style="display:none">
+    <div class="cost-section">
+      <div class="cost-section-head">
+        <i class="fa-solid fa-dollar-sign"></i> Booth &amp; Sponsorship Cost Summary · ibeXvision 2026 Budget Planner
+      </div>
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Booth / Sponsor Cost</th>
+            <th>Includes</th>
+            <th>Contact</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>escar USA 2026</strong></td>
+            <td>May 19–21</td>
+            <td>Novi, MI</td>
+            <td><span class="cost-range">$6,200</span><br><small style="color:var(--text-4)">Cocktail Rx $5,300 · Meal $4,000</small></td>
+            <td>6-ft table · 2 chairs · 2 reg passes (≈$850 ea)</td>
+            <td><a href="mailto:sara@waypointmc.com" style="color:var(--brand)">sara@waypointmc.com</a></td>
+            <td><span class="cost-priority cp-high">🔴 MUST</span></td>
+          </tr>
+          <tr>
+            <td><strong>AUVSI XPONENTIAL 2026</strong></td>
+            <td>May 11–14</td>
+            <td>Detroit, MI</td>
+            <td><span class="cost-range">$8,000–$18,000</span></td>
+            <td>10×10 booth · island upgrades · 3 reg passes</td>
+            <td><a href="https://www.xponential.org" target="_blank" style="color:var(--brand)">xponential.org</a></td>
+            <td><span class="cost-priority cp-high">🔴 MUST</span></td>
+          </tr>
+          <tr>
+            <td><strong>AutoTech 2026</strong></td>
+            <td>Jun 2–4</td>
+            <td>Novi, MI</td>
+            <td><span class="cost-range">$10,000–$20,000+</span><br><small style="color:var(--text-4)">Corner 10×10 from $10k · Diamond/Gold $15k–$20k+</small></td>
+            <td>10×10 booth · branding · VIP lounge access options</td>
+            <td><a href="https://autotechevents.com/home/passes-prices/" target="_blank" style="color:var(--brand)">autotechevents.com/passes</a></td>
+            <td><span class="cost-priority cp-high">🔴 MUST</span></td>
+          </tr>
+          <tr>
+            <td><strong>SDV USA Summit</strong></td>
+            <td>Jun 29–30</td>
+            <td>San Francisco, CA</td>
+            <td><span class="cost-range">$3,250–$30,000+</span><br><small style="color:var(--text-4)">Standard to Platinum</small></td>
+            <td>Exhibition table · thought leadership slot · logo branding</td>
+            <td><a href="https://www.sdv-usa.com" target="_blank" style="color:var(--brand)">sdv-usa.com</a></td>
+            <td><span class="cost-priority cp-high">🔴 HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>DEF CON 34 — Car Hacking Village</strong></td>
+            <td>Aug 6–9</td>
+            <td>Las Vegas, NV</td>
+            <td><span class="cost-range">$2,500–$8,500</span><br><small style="color:var(--text-4)">Bronze $2,500 · Silver $4,500 · Gold $8,500</small></td>
+            <td>Gold: tech demo table + badge art · Silver: +1 badge + social · No traditional sales booth</td>
+            <td><a href="https://www.carhackingvillage.com" target="_blank" style="color:var(--brand)">carhackingvillage.com</a></td>
+            <td><span class="cost-priority cp-high">🔴 HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>Auto-ISAC Summit 2026</strong></td>
+            <td>Oct 6–9</td>
+            <td>Novi, MI</td>
+            <td><span class="cost-range">$5,000–$7,000</span><br><small style="color:var(--text-4)">Sponsor attendee $5,000</small></td>
+            <td>Table · branding item · attendee passes · shuttle</td>
+            <td><a href="mailto:heatherwagner@automotiveisac.com" style="color:var(--brand)">heatherwagner@automotiveisac.com</a></td>
+            <td><span class="cost-priority cp-high">🔴 MUST</span></td>
+          </tr>
+          <tr>
+            <td><strong>Vehicle Tech Week NA</strong></td>
+            <td>Oct 27–29</td>
+            <td>Novi, MI</td>
+            <td><span class="cost-range">$5,000–$20,000+</span></td>
+            <td>Shell scheme / space-only · island booth options</td>
+            <td><a href="https://www.autonomousvehicletechnologyexpo-usa.com/en/exhibit.html" target="_blank" style="color:var(--brand)">avte-usa.com</a></td>
+            <td><span class="cost-priority cp-high">🔴 HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>IEEE IV 2026</strong></td>
+            <td>Jun 21–25</td>
+            <td>Detroit, MI</td>
+            <td><span class="cost-range">$3,000–$8,000</span></td>
+            <td>Academic conference sponsor tiers</td>
+            <td><a href="https://ieee-iv.org" target="_blank" style="color:var(--brand)">ieee-iv.org</a></td>
+            <td><span class="cost-priority cp-med">🟡 MED</span></td>
+          </tr>
+          <tr>
+            <td><strong>TÜV Rheinland FuSa Symposium</strong></td>
+            <td>Sep/Oct TBD</td>
+            <td>Detroit, MI</td>
+            <td><span class="cost-range">$3,000–$7,000</span></td>
+            <td>Partner sponsor packages</td>
+            <td><a href="https://www.tuv.com/usa/en/events.html" target="_blank" style="color:var(--brand)">tuv.com/usa</a></td>
+            <td><span class="cost-priority cp-high">🔴 HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>Sensors Converge 2026</strong></td>
+            <td>Jun 23–25</td>
+            <td>Santa Clara, CA</td>
+            <td><span class="cost-range">$5,000–$15,000</span><br><small style="color:var(--text-4)">10×10 and island options</small></td>
+            <td>Exhibition booth · sensor industry audience</td>
+            <td><a href="https://www.sensorsconverge.com/exhibiting" target="_blank" style="color:var(--brand)">sensorsconverge.com</a></td>
+            <td><span class="cost-priority cp-high">🔴 HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>ATS 2026 (SAE)</strong></td>
+            <td>Jul 27–30</td>
+            <td>San Diego, CA</td>
+            <td><span class="cost-range">$798 reg · exhibit TBD</span><br><small style="color:var(--text-4)">Contact megan.mccoy@sae.org</small></td>
+            <td>Registration + exhibit/sponsor on request</td>
+            <td><a href="mailto:megan.mccoy@sae.org" style="color:var(--brand)">megan.mccoy@sae.org</a></td>
+            <td><span class="cost-priority cp-high">🔴 HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>ACM Advanced Tech Labs</strong></td>
+            <td>Oct 19–22</td>
+            <td>Ypsilanti, MI</td>
+            <td><span class="cost-range">TBD</span><br><small style="color:var(--text-4)">Lab day participation / sponsor</small></td>
+            <td>Lab demo slot · Guided Attacks Day (Oct 22) ideal for PenTesterLab</td>
+            <td><a href="https://www.acmwillowrun.org" target="_blank" style="color:var(--brand)">acmwillowrun.org</a></td>
+            <td><span class="cost-priority cp-high">🔴 HIGH</span></td>
+          </tr>
+          <tr style="background:#F8FAFC;font-weight:700">
+            <td colspan="3"><strong>Estimated Budget (10 priority events)</strong></td>
+            <td><span class="cost-range" style="font-size:16px">$55,000–$120,000+</span></td>
+            <td colspan="3" style="font-size:11px;color:var(--text-3)">+ Travel · Shipping · Graphics/Print ($4k–$16k) · Lead Retrieval ($500 ea)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cost-section" style="margin-top:16px">
+      <div class="cost-section-head"><i class="fa-solid fa-calculator"></i> Additional Operating Costs Per Event</div>
+      <table class="cost-table">
+        <thead><tr><th>Cost Item</th><th>Low Est.</th><th>High Est.</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Logistics &amp; Setup (transport + labor)</td><td>$2,000</td><td>$10,000</td><td>Installation/dismantling per event</td></tr>
+          <tr><td>Graphics &amp; Printed Materials</td><td>$2,000</td><td>$16,000</td><td>Backdrop, banners, brochures</td></tr>
+          <tr><td>Lead Retrieval App</td><td>$400</td><td>$700</td><td>Badge scanning, CRM integration</td></tr>
+          <tr><td>Hotel &amp; Travel (2 staff, 3 nights)</td><td>$1,800</td><td>$4,500</td><td>Varies by city and event duration</td></tr>
+          <tr><td>Demo Equipment Shipping</td><td>$500</td><td>$2,000</td><td>Laptop, display, product hardware</td></tr>
+          <tr style="font-weight:700"><td><strong>Total per event (operating only)</strong></td><td><strong>$6,700</strong></td><td><strong>$33,200</strong></td><td>Excludes booth/sponsorship fee</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</div><!-- /layout -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">
+    <img class="footer-logo" src="assets/logo.png" alt="ibeXvision"
+      onerror="this.outerHTML='<span style=\'font-weight:900;color:white;background:#0F172A;padding:3px 9px;border-radius:5px;font-size:13px;\'>ibeXvision</span>'">
+    <div>
+      <div class="footer-name">ibeXvision</div>
+      <div class="footer-contact">+1 248-457-4505 · info@ibexvision.ai · 200 E Big Beaver Rd, Troy MI 48083</div>
+    </div>
+  </div>
+  <div class="footer-note">
+    ⚠ Dates verified via official event websites on May 1, 2026. Events marked EST. are estimated based on historical scheduling — confirm with organiser before registering.
+  </div>
+  <div class="footer-links">
+    <a href="https://ibexvision.ai" target="_blank">ibexvision.ai</a>
+    <a href="https://ibexvision.ai/event" target="_blank">Current Event</a>
+    <a href="mailto:info@ibexvision.ai">Email Us</a>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
